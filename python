@@ -1,0 +1,73 @@
+import numpy as np
+a,b,c,d= map(int, raw_input("enter 4 value").split())
+#print a+b+c+d
+e=np.array([[a, b, c, d],
+                 [a, b, d, c],
+                 [a, c, b, d],
+                 [a, c, d, b],
+                 [a, d, b, c],
+                 [a, d, c, b],#a6
+                 [b, a, c, d],
+                 [b, a, d, c],
+                 [b, c, a, d],
+                 [b, c, d, a],
+                 [b, d, a, c],
+                 [b, d, c, a],#b6
+                 [c, a, b, d],
+                 [c, a, d, b],
+                 [c, b, a, d],
+                 [c, b, d, a],
+                 [c, d, a, b],
+                 [c, d, b, a],#c6
+                 [d, a, b, c],
+                 [d, a, c, b],
+                 [d, b, a, c],
+                 [d, b, c, a],
+                 [d, c, a, b],
+                 [d, c, b, a]],dtype=float)#d6
+#print e
+def jjcc(x,y):
+    return np.array([x+y,x-y,x*y,x/y])
+def case1(x):
+    x1=jjcc(e[x][0],e[x][1])
+    x2=jjcc(x1,e[x][2])
+    x3=jjcc(x2,e[x][3])
+    '''print x1
+    print x2
+    print x3'''
+    result = np.argwhere(x3 == 24)
+    #print result
+    if(result.shape[0]!=0):
+        y = ['+', '-', '*','/']
+        i=0
+        while i<result.shape[0]:
+            print'(','(',int(e[x][0]),y[result[i][2]],int(e[x][1]),')',y[result[i][1]],int(e[x][2]),')',y[result[i][0]],int(e[x][3])
+            i+=1
+            break
+def case2(x):
+    x1=jjcc(e[x][0],e[x][1])
+    x0=jjcc(e[x][2],e[x][3])
+    x2=np.array([[x0[0],x0[1],x0[2],x0[3]],
+                 [x0[1], x0[2], x0[3], x0[0]],
+                 [x0[2], x0[3], x0[0], x0[1]],
+                 [x0[3], x0[0], x0[1], x0[2]],])
+    x3 = jjcc(x1, x2)
+    '''print x1
+    print x2
+    print x3'''
+    result = np.argwhere(x3 == 24)
+    #print result
+    if(result.shape[0]!=0):
+        y = ['+', '-', '*','/']
+        z =[['+', '-', '*','/'],
+            ['-', '*', '/', '+'],
+            [ '*', '/','+', '-'],
+            ['/', '+', '-', '*']]
+        i=0
+        while i<result.shape[0]:
+            print'(',int(e[x][0]),y[result[i][2]],int(e[x][1]),')',y[result[i][0]],'(',int(e[x][2]),z[result[i][1]][result[i][2]],int(e[x][3]),')'
+            i+=1
+            break
+for i in range(23):
+    case1(i)
+    case2(i)
